@@ -25,7 +25,7 @@ interface Props {
 
 const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
   const [step, setStep] = useState(0);
-  const [packageId, setPackageId] = useState<PackageId>(initialPackage ?? "standard");
+  const [packageId, setPackageId] = useState<PackageId>(initialPackage ?? "comfort");
   const [period, setPeriod] = useState<Period>(6);
   const [details, setDetails] = useState<Details>({ fullName: "", email: "", university: "", address: "", moveInDate: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof Details, string>>>({});
@@ -35,7 +35,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
   useEffect(() => {
     if (open) {
       setStep(0);
-      setPackageId(initialPackage ?? "standard");
+      setPackageId(initialPackage ?? "comfort");
       setPeriod(6);
       setErrors({});
       setConfirmationId(null);
@@ -111,7 +111,10 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                       <p className="font-display text-lg font-bold text-foreground">{p.name}</p>
                       <p className="text-sm text-muted-foreground">{p.tagline}</p>
                     </div>
-                    <p className="font-display text-xl font-bold text-foreground">€{p.monthlyPrice}<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+                    <div className="text-right">
+                      <p className="font-display text-xl font-bold text-foreground">€{p.monthlyPrice}<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+                      <p className="text-xs text-muted-foreground">Deposit €{p.deposit}</p>
+                    </div>
                   </button>
                 );
               })}
@@ -150,13 +153,13 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
             <div className="space-y-4">
               <div className="rounded-2xl bg-muted p-4 text-sm">
                 <p className="font-bold text-foreground">{pkg.name} · {period} months</p>
-                <p className="text-muted-foreground">€{pricing.perMonth}/month · €{pricing.total} total{pricing.saved > 0 && ` · save €${pricing.saved}`}</p>
+                <p className="text-muted-foreground">€{pricing.perMonth}/month · €{pricing.total} total{pricing.saved > 0 && ` · save €${pricing.saved}`} · Deposit €{pkg.deposit}</p>
               </div>
               {([
                 { id: "fullName", label: "Full name", type: "text", placeholder: "Mei Tanaka" },
                 { id: "email", label: "Email", type: "email", placeholder: "you@university.edu" },
-                { id: "university", label: "University", type: "text", placeholder: "TU Delft" },
-                { id: "address", label: "Delivery address", type: "text", placeholder: "Mekelweg 5, Delft" },
+                { id: "university", label: "University", type: "text", placeholder: "KU Leuven" },
+                { id: "address", label: "Delivery address", type: "text", placeholder: "Naamsestraat 80, Leuven" },
                 { id: "moveInDate", label: "Move-in date", type: "date", placeholder: "" },
               ] as const).map((field) => (
                 <div key={field.id} className="space-y-1.5">
@@ -181,7 +184,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-sunset text-primary-foreground shadow-warm animate-float">
                 <PartyPopper className="h-10 w-10" />
               </div>
-              <h3 className="mt-6 font-display text-3xl font-bold text-foreground">You're all set!</h3>
+              <h3 className="mt-6 font-display text-3xl font-bold text-foreground">You&apos;re all set!</h3>
               <p className="mt-2 text-muted-foreground">
                 Booking <span className="font-mono font-bold text-foreground">{confirmationId}</span> — confirmation sent to{" "}
                 <span className="font-bold text-foreground">{details.email}</span>.
@@ -190,6 +193,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                 <p><span className="text-muted-foreground">Package:</span> <span className="font-bold">{pkg.name}</span></p>
                 <p><span className="text-muted-foreground">Period:</span> <span className="font-bold">{period} months</span></p>
                 <p><span className="text-muted-foreground">Move-in:</span> <span className="font-bold">{details.moveInDate}</span></p>
+                <p><span className="text-muted-foreground">Deposit:</span> <span className="font-bold">€{pkg.deposit}</span></p>
                 <p className="mt-2 border-t border-border pt-2"><span className="text-muted-foreground">Total:</span> <span className="font-display text-lg font-bold text-primary">€{pricing.total}</span></p>
               </div>
             </div>
