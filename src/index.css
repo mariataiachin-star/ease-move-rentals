@@ -2,57 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* NestKit — warm & friendly design system for international student rental packages.
+/* EaseMove Rentals — soft lavender design system for international students in Belgium.
    All colors MUST be HSL. */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Nunito:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    /* Warm cream background, deep cocoa text */
-    --background: 36 40% 96%;
-    --foreground: 22 30% 18%;
+    /* Clean white background, deep ink text */
+    --background: 0 0% 100%;
+    --foreground: 252 25% 14%;
 
     --card: 0 0% 100%;
-    --card-foreground: 22 30% 18%;
+    --card-foreground: 252 25% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 22 30% 18%;
+    --popover-foreground: 252 25% 14%;
 
-    /* Terracotta primary */
-    --primary: 14 72% 52%;
-    --primary-foreground: 36 40% 98%;
-    --primary-glow: 18 85% 65%;
+    /* Soft lilac primary (#BFA2FF range) */
+    --primary: 258 100% 82%;
+    --primary-foreground: 252 40% 18%;
+    --primary-glow: 262 100% 88%;
 
-    /* Mustard secondary */
-    --secondary: 36 75% 60%;
-    --secondary-foreground: 22 40% 18%;
+    /* Deeper lavender secondary */
+    --secondary: 260 60% 96%;
+    --secondary-foreground: 252 40% 22%;
 
-    /* Sage accent */
-    --accent: 130 25% 55%;
-    --accent-foreground: 36 40% 98%;
+    /* Lavender accent */
+    --accent: 258 80% 75%;
+    --accent-foreground: 0 0% 100%;
 
-    --muted: 30 30% 92%;
-    --muted-foreground: 22 15% 40%;
+    --muted: 260 40% 97%;
+    --muted-foreground: 252 12% 45%;
 
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 36 40% 98%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 30 25% 86%;
-    --input: 30 25% 88%;
-    --ring: 14 72% 52%;
+    --border: 258 40% 92%;
+    --input: 258 40% 92%;
+    --ring: 258 80% 70%;
 
-    --radius: 1.25rem;
+    --radius: 1rem;
 
-    /* Gradients */
-    --gradient-warm: linear-gradient(135deg, hsl(36 80% 92%) 0%, hsl(20 75% 88%) 50%, hsl(14 65% 82%) 100%);
-    --gradient-sunset: linear-gradient(135deg, hsl(14 72% 52%) 0%, hsl(28 85% 60%) 100%);
-    --gradient-cream: linear-gradient(180deg, hsl(36 40% 96%) 0%, hsl(30 50% 92%) 100%);
+    /* Gradients — soft lilac */
+    --gradient-warm: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(258 80% 97%) 50%, hsl(258 80% 92%) 100%);
+    --gradient-sunset: linear-gradient(135deg, hsl(258 95% 78%) 0%, hsl(268 90% 72%) 100%);
+    --gradient-cream: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(258 70% 98%) 100%);
 
     /* Shadows */
-    --shadow-soft: 0 8px 30px -8px hsl(14 50% 40% / 0.15);
-    --shadow-warm: 0 20px 60px -20px hsl(14 60% 45% / 0.35);
-    --shadow-card: 0 4px 24px -8px hsl(22 30% 30% / 0.12);
+    --shadow-soft: 0 8px 30px -8px hsl(258 60% 50% / 0.12);
+    --shadow-warm: 0 24px 60px -24px hsl(258 70% 55% / 0.28);
+    --shadow-card: 0 4px 24px -8px hsl(258 40% 40% / 0.08);
 
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -67,25 +67,25 @@
   }
 
   .dark {
-    --background: 22 30% 10%;
-    --foreground: 36 40% 96%;
-    --card: 22 30% 13%;
-    --card-foreground: 36 40% 96%;
-    --popover: 22 30% 13%;
-    --popover-foreground: 36 40% 96%;
-    --primary: 18 85% 62%;
-    --primary-foreground: 22 30% 10%;
-    --secondary: 36 60% 55%;
-    --secondary-foreground: 22 30% 10%;
-    --accent: 130 30% 55%;
-    --accent-foreground: 22 30% 10%;
-    --muted: 22 20% 18%;
-    --muted-foreground: 30 15% 70%;
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 36 40% 96%;
-    --border: 22 20% 22%;
-    --input: 22 20% 22%;
-    --ring: 18 85% 62%;
+    --background: 252 30% 8%;
+    --foreground: 258 40% 96%;
+    --card: 252 30% 12%;
+    --card-foreground: 258 40% 96%;
+    --popover: 252 30% 12%;
+    --popover-foreground: 258 40% 96%;
+    --primary: 258 95% 80%;
+    --primary-foreground: 252 30% 10%;
+    --secondary: 252 25% 18%;
+    --secondary-foreground: 258 40% 96%;
+    --accent: 258 80% 70%;
+    --accent-foreground: 252 30% 10%;
+    --muted: 252 25% 16%;
+    --muted-foreground: 258 15% 70%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 258 40% 96%;
+    --border: 252 20% 22%;
+    --input: 252 20% 22%;
+    --ring: 258 95% 80%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

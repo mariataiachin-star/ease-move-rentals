@@ -64,8 +64,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        display: ['Fraunces', 'serif'],
-        body: ['Nunito', 'system-ui', 'sans-serif'],
+        display: ['"DM Serif Display"', 'serif'],
+        body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {
