@@ -3,8 +3,11 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 import Packages from "@/components/Packages";
+import Benefits from "@/components/Benefits";
+import Sustainability from "@/components/Sustainability";
 import Stories from "@/components/Stories";
 import Faq from "@/components/Faq";
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BookingDialog from "@/components/BookingDialog";
 import type { PackageId } from "@/data/packages";
@@ -25,8 +28,11 @@ const Index = () => {
         <Hero />
         <HowItWorks />
         <Packages onSelect={handleSelect} />
+        <Benefits />
+        <Sustainability />
         <Stories />
         <Faq />
+        <Contact />
       </main>
       <Footer />
       <BookingDialog open={bookingOpen} onOpenChange={setBookingOpen} initialPackage={selectedPackage} />
