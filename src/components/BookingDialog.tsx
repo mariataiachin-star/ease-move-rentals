@@ -59,7 +59,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
     setSubmitting(true);
     setTimeout(() => {
       setSubmitting(false);
-      setConfirmationId("NK-" + Math.random().toString(36).slice(2, 8).toUpperCase());
+      setConfirmationId("EM-" + Math.random().toString(36).slice(2, 8).toUpperCase());
       setStep(3);
       toast.success("Booking request received! Check your inbox.");
     }, 900);
@@ -70,7 +70,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl rounded-3xl p-0 overflow-hidden">
-        <DialogTitle className="sr-only">Book your NestKit package</DialogTitle>
+        <DialogTitle className="sr-only">Book your EaseMove rental kit</DialogTitle>
         <DialogDescription className="sr-only">Choose package, rental period, and enter your details.</DialogDescription>
 
         {/* Progress */}

@@ -1,19 +1,38 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const FAQS = [
-  { q: "When and where do you deliver?", a: "We deliver to 40+ university cities across Europe. Pick your move-in date at checkout and we'll have everything waiting in your room." },
-  { q: "Is everything cleaned and sanitized?", a: "Yes — all textiles are professionally laundered and kitchenware is industrially sanitized between rentals. You can also choose our 'sealed-new' option at checkout." },
-  { q: "What if something breaks?", a: "Normal wear is on us. For accidental damage, we have a small flat repair fee. No deposits, no hidden charges." },
-  { q: "Can I extend or cut my rental short?", a: "Absolutely. Extend with one click in your dashboard, or end early with a 14-day notice." },
-  { q: "How do you handle pickup at the end?", a: "Just leave the boxes by your door. We'll pick them up on the date you set — no laundry, no goodbyes to your duvet." },
+  {
+    q: "Where in Belgium do you deliver?",
+    a: "We deliver to student housing and private apartments across Belgian university cities including Brussels, Leuven, Ghent, Antwerp, Liège and Louvain-la-Neuve. Just enter your address at checkout.",
+  },
+  {
+    q: "How does the refundable deposit work?",
+    a: "You pay a small deposit when booking. When you return the kit in good condition, the full deposit is refunded to your account — no hidden fees.",
+  },
+  {
+    q: "Is everything cleaned between rentals?",
+    a: "Yes. All textiles are professionally laundered and kitchenware is thoroughly cleaned and checked before each new rental.",
+  },
+  {
+    q: "What if something gets damaged?",
+    a: "Normal wear is on us. For accidental damage we charge a small, transparent fee per item — clearly listed before you book.",
+  },
+  {
+    q: "Can I extend or shorten my rental?",
+    a: "Yes. You can extend your rental at any time from your account, or end it early with two weeks' notice.",
+  },
+  {
+    q: "How do pickup and return work?",
+    a: "On your end date we collect everything from your door. No need to launder, repack or sell anything yourself.",
+  },
 ];
 
 const Faq = () => (
   <section id="faq" className="py-24 bg-gradient-cream">
     <div className="container mx-auto max-w-3xl">
       <div className="text-center">
-        <p className="text-sm font-bold uppercase tracking-widest text-primary">FAQ</p>
-        <h2 className="mt-3 font-display text-4xl font-bold text-foreground md:text-5xl">Everything you wanted to ask</h2>
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">FAQ</p>
+        <h2 className="mt-3 font-display text-4xl text-foreground md:text-5xl">Questions students ask us</h2>
       </div>
 
       <Accordion type="single" collapsible className="mt-12 space-y-3">
@@ -23,7 +42,7 @@ const Faq = () => (
             value={`item-${i}`}
             className="rounded-2xl border border-border bg-card px-6 shadow-card"
           >
-            <AccordionTrigger className="text-left font-display text-lg font-semibold hover:no-underline">
+            <AccordionTrigger className="text-left font-body text-base font-semibold hover:no-underline">
               {f.q}
             </AccordionTrigger>
             <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
