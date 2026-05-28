@@ -1,7 +1,12 @@
-import { Package, Sparkles, Crown } from "lucide-react";
+import { Package, Sparkles } from "lucide-react";
 
-export type PackageId = "starter" | "standard" | "deluxe";
+export type PackageId = "essential" | "comfort";
 export type Period = 1 | 3 | 6 | 12;
+
+export interface KitCategory {
+  label: string;
+  items: string[];
+}
 
 export interface RentalPackage {
   id: PackageId;
@@ -9,62 +14,96 @@ export interface RentalPackage {
   tagline: string;
   description: string;
   monthlyPrice: number;
+  deposit: number;
   icon: typeof Package;
   accent: string;
-  includes: string[];
+  categories: KitCategory[];
   highlight?: string;
 }
 
 export const PACKAGES: RentalPackage[] = [
   {
-    id: "starter",
+    id: "essential",
     name: "Essential Kit",
-    tagline: "Settle in from night one",
-    description: "The basics every student needs on arrival — quality bedding, towels and a starter kitchen set.",
-    monthlyPrice: 35,
+    tagline: "Everything you need to settle in",
+    description: "A thoughtfully curated kit covering your bedroom and kitchen basics — quality essentials for your first weeks in Belgium.",
+    monthlyPrice: 20,
+    deposit: 60,
     icon: Package,
     accent: "from-[hsl(258_90%_85%)] to-[hsl(258_85%_75%)]",
-    includes: [
-      "Pillow, duvet & duvet cover",
-      "Fitted sheet & 2 towels",
-      "Mug, plate, bowl & cutlery set",
-      "Essential cleaning kit",
-      "Free delivery & pickup in Belgium",
+    categories: [
+      {
+        label: "Bedroom",
+        items: [
+          "Pillow",
+          "Blanket",
+          "Bedsheet set",
+          "Pillowcase",
+        ],
+      },
+      {
+        label: "Kitchen",
+        items: [
+          "2 big plates",
+          "2 bowls",
+          "2 mugs",
+          "2 glasses",
+          "2 forks",
+          "2 knives",
+          "2 tablespoons",
+          "2 teaspoons",
+          "1 frying pan",
+          "1 pot",
+          "1 spatula",
+        ],
+      },
     ],
   },
   {
-    id: "standard",
+    id: "comfort",
     name: "Comfort Kit",
-    tagline: "Most chosen by Erasmus students",
-    description: "Everything in Essential, plus a complete kitchen and study setup to feel at home from day one.",
-    monthlyPrice: 59,
+    tagline: "Most chosen by international students",
+    description: "Includes everything from the Essential Kit, plus extra comfort items to truly feel at home during your stay.",
+    monthlyPrice: 30,
+    deposit: 100,
     icon: Sparkles,
     accent: "from-[hsl(268_90%_78%)] to-[hsl(258_95%_70%)]",
     highlight: "Most chosen",
-    includes: [
-      "All Essential items",
-      "Full kitchen kit (pots, pans, knives)",
-      "Kettle, toaster & utensil set",
-      "Desk lamp & study organizer",
-      "Laundry basket & hangers",
-      "Free swap once per period",
-    ],
-  },
-  {
-    id: "deluxe",
-    name: "Premium Kit",
-    tagline: "A fully furnished feel",
-    description: "Premium textiles, kitchen appliances and finishing touches that turn a student room into a real home.",
-    monthlyPrice: 95,
-    icon: Crown,
-    accent: "from-[hsl(248_70%_60%)] to-[hsl(268_85%_70%)]",
-    includes: [
-      "All Comfort items",
-      "Premium hotel-grade bedding",
-      "Coffee machine & blender",
-      "Reading lamp & study chair pad",
-      "Cushions, throws & decor accents",
-      "Priority delivery & 24/7 support",
+    categories: [
+      {
+        label: "Bedroom",
+        items: [
+          "Pillow",
+          "Blanket",
+          "Bedsheet set",
+          "Pillowcase",
+          "Mattress protector",
+          "Extra bedsheet set",
+          "Bedside lamp",
+          "10 hangers",
+        ],
+      },
+      {
+        label: "Kitchen",
+        items: [
+          "2 big plates",
+          "2 bowls",
+          "2 mugs",
+          "2 glasses",
+          "2 forks",
+          "2 knives",
+          "2 tablespoons",
+          "2 teaspoons",
+          "1 frying pan",
+          "1 pot",
+          "1 spatula",
+          "Food containers",
+          "Cutting board",
+          "Kitchen knife",
+          "Salad bowl",
+          "Full pot set: small, medium, and large",
+        ],
+      },
     ],
   },
 ];

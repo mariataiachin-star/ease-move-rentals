@@ -12,23 +12,23 @@ const Packages = ({ onSelect }: PackagesProps) => (
       <div className="mx-auto max-w-2xl text-center">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Available rental kits</p>
         <h2 className="mt-3 font-display text-4xl text-foreground md:text-5xl">
-          One kit for every kind of stay
+          Choose the kit that fits your stay
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Prices below are per month. Longer rentals unlock automatic discounts.
+          Transparent monthly pricing with a one-time refundable deposit.
         </p>
       </div>
 
-      <div className="mt-16 grid gap-8 lg:grid-cols-3">
+      <div className="mt-16 grid gap-8 lg:grid-cols-2 lg:max-w-5xl lg:mx-auto">
         {PACKAGES.map((pkg) => {
           const Icon = pkg.icon;
-          const featured = pkg.id === "standard";
+          const featured = pkg.id === "comfort";
           return (
             <article
               key={pkg.id}
               className={`relative flex flex-col rounded-2xl border bg-card p-8 transition-smooth hover:-translate-y-2 ${
                 featured
-                  ? "border-primary shadow-warm lg:scale-[1.03]"
+                  ? "border-primary shadow-warm lg:scale-[1.02]"
                   : "border-border shadow-card hover:shadow-warm"
               }`}
             >
@@ -44,21 +44,36 @@ const Packages = ({ onSelect }: PackagesProps) => (
               <p className="text-sm font-semibold text-primary">{pkg.tagline}</p>
               <p className="mt-3 text-sm text-muted-foreground">{pkg.description}</p>
 
-              <div className="mt-6 flex items-baseline gap-1">
-                <span className="font-display text-5xl text-foreground">€{pkg.monthlyPrice}</span>
-                <span className="text-muted-foreground">/month</span>
+              <div className="mt-6">
+                <div className="flex items-baseline gap-1">
+                  <span className="font-display text-5xl text-foreground">€{pkg.monthlyPrice}</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+                <p className="mt-1 text-sm font-medium text-muted-foreground">
+                  Deposit: €{pkg.deposit} total
+                </p>
+                <p className="mt-2 text-xs italic text-muted-foreground/80">
+                  Deposit is partially refundable after return, depending on product condition.
+                </p>
               </div>
 
-              <ul className="mt-6 space-y-3 text-sm">
-                {pkg.includes.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent">
-                      <Check className="h-3 w-3" strokeWidth={3} />
-                    </span>
-                    <span className="text-foreground/80">{item}</span>
-                  </li>
+              <div className="mt-6 space-y-5">
+                {pkg.categories.map((cat) => (
+                  <div key={cat.label}>
+                    <p className="text-xs font-bold uppercase tracking-wider text-primary mb-2">{cat.label}</p>
+                    <ul className="space-y-2 text-sm">
+                      {cat.items.map((item) => (
+                        <li key={item} className="flex items-start gap-2.5">
+                          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent">
+                            <Check className="h-3 w-3" strokeWidth={3} />
+                          </span>
+                          <span className="text-foreground/80">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
 
               <Button
                 variant={featured ? "hero" : "soft"}
