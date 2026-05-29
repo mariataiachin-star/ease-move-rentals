@@ -34,7 +34,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
 
   useEffect(() => {
     if (open) {
-      setStep(0);
+      setStep(initialPackage ? 1 : 0);
       setPackageId(initialPackage ?? "comfort");
       setPeriod(6);
       setErrors({});
@@ -122,7 +122,20 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
           )}
 
           {step === 1 && (
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between rounded-2xl bg-muted px-4 py-3 text-sm">
+                <div>
+                  <p className="font-bold text-foreground">{pkg.name}</p>
+                  <p className="text-muted-foreground">€{pkg.monthlyPrice}/month · Deposit €{pkg.deposit}</p>
+                </div>
+                <button
+                  onClick={() => setStep(0)}
+                  className="text-xs font-semibold text-primary underline-offset-4 hover:underline"
+                >
+                  Change kit
+                </button>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
               {PERIODS.map((p) => {
                 const selected = p.months === period;
                 const price = calculatePrice(pkg.monthlyPrice, p.months);
@@ -146,6 +159,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                   </button>
                 );
               })}
+              </div>
             </div>
           )}
 
