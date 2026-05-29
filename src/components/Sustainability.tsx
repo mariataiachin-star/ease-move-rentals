@@ -37,7 +37,7 @@ const Sustainability = () => (
             A circular alternative to single-use student moves
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
-            Every year, thousands of international students buy bedding, kitchenware and small furniture for a few months — then throw most of it away. EaseMove Rentals offers a simpler, more responsible alternative built around reuse.
+            Every year, thousands of international students buy bedding, kitchenware and small furniture for a few months — then throw most of it away. Survival Kit offers a simpler, more responsible alternative built around reuse.
           </p>
           <div className="mt-8 rounded-2xl border border-primary/30 bg-card/80 p-6 shadow-soft backdrop-blur">
             <p className="font-body text-sm font-semibold text-foreground">Our promise</p>

@@ -4,12 +4,12 @@ import heroImage from "@/assets/hero-student.jpg";
 
 const Hero = () => {
   return (
-    <section id="top" className="relative overflow-hidden bg-gradient-warm pb-24 pt-12 md:pt-20">
-      {/* floating blobs */}
-      <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-primary/30 blur-3xl" />
-      <div className="absolute -bottom-32 -right-24 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
+    <section id="top" className="relative isolate overflow-hidden bg-gradient-warm pb-28 pt-20 md:pt-28 lg:pt-32">
+      {/* subtle background accents — kept behind content */}
+      <div aria-hidden className="pointer-events-none absolute -top-40 -left-40 -z-10 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-40 -right-40 -z-10 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
 
-      <div className="container relative mx-auto grid items-center gap-12 lg:grid-cols-2">
+      <div className="container relative z-10 mx-auto grid items-center gap-12 lg:grid-cols-2">
         <div className="animate-fade-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-card px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary shadow-soft">
             <GraduationCap className="h-4 w-4" /> For Erasmus & international students in Belgium
@@ -41,7 +41,7 @@ const Hero = () => {
           <div className="absolute inset-0 -rotate-3 rounded-[2rem] bg-gradient-sunset opacity-25 blur-2xl" />
           <img
             src={heroImage}
-            alt="International student unpacking an EaseMove rental kit in a Belgian student room"
+            alt="International student unpacking a Survival Kit rental in a Belgian student room"
             width={1536}
             height={1280}
             className="relative rounded-[2rem] border border-primary/20 bg-card shadow-warm"

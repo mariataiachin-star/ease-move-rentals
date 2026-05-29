@@ -8,7 +8,7 @@ const Footer = () => (
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-sunset text-primary-foreground">
             <Boxes className="h-5 w-5" />
           </span>
-          EaseMove <span className="text-primary">Rentals</span>
+          Survival <span className="text-primary">Kit</span>
         </div>
         <p className="mt-4 max-w-sm text-sm text-background/70">
           Sustainable rental kits for international and Erasmus students in Belgium. Affordable, circular, and built for temporary stays.
@@ -35,7 +35,7 @@ const Footer = () => (
       </div>
     </div>
     <div className="container mx-auto mt-12 border-t border-background/10 pt-6 text-center text-xs text-background/50">
-      © {new Date().getFullYear()} EaseMove Rentals · Built for students in Belgium
+      © {new Date().getFullYear()} Survival Kit · Built for students in Belgium
     </div>
   </footer>
 );

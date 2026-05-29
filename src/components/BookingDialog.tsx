@@ -70,7 +70,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl rounded-3xl p-0 overflow-hidden">
-        <DialogTitle className="sr-only">Book your EaseMove rental kit</DialogTitle>
+        <DialogTitle className="sr-only">Book your Survival Kit rental</DialogTitle>
         <DialogDescription className="sr-only">Choose package, rental period, and enter your details.</DialogDescription>
 
         {/* Progress */}
