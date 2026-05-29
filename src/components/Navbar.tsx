@@ -16,7 +16,7 @@ const Navbar = () => {
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-sunset text-primary-foreground shadow-soft">
             <Boxes className="h-5 w-5" />
           </span>
-          <span className="font-body font-bold tracking-tight">EaseMove<span className="text-primary"> Rentals</span></span>
+          <span className="font-body font-bold tracking-tight">Survival<span className="text-primary"> Kit</span></span>
         </button>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
           <button onClick={() => scrollTo("how")} className="hover:text-foreground transition-smooth">How it works</button>
