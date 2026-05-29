@@ -91,7 +91,7 @@ const Packages = ({ onSelect }: PackagesProps) => {
               <Button
                 variant={featured ? "hero" : "soft"}
                 size="lg"
-                className="mt-auto w-full pt-1"
+                className="mt-8 w-full"
                 onClick={() => onSelect(pkg.id)}
               >
                 Choose {pkg.name}
