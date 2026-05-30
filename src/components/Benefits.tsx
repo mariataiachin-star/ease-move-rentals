@@ -39,7 +39,7 @@ const Benefits = () => (
       <div className="mx-auto max-w-2xl text-center">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Why students choose us</p>
         <h2 className="mt-3 font-display text-4xl text-foreground md:text-5xl">
-          Built for international students in Belgium
+          Built for international students in Antwerp
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
           A simple, honest service that removes the stress of moving abroad for studies.

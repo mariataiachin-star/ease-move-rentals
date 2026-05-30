@@ -26,7 +26,7 @@ export const PACKAGES: RentalPackage[] = [
     id: "essential",
     name: "Essential Kit",
     tagline: "Everything you need to settle in",
-    description: "A thoughtfully curated kit covering your bedroom and kitchen basics — quality essentials for your first weeks in Belgium.",
+    description: "A thoughtfully curated kit covering your bedroom and kitchen basics — quality essentials for your first weeks in Antwerp.",
     monthlyPrice: 20,
     deposit: 60,
     icon: Package,

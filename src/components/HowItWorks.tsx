@@ -3,7 +3,7 @@ import { PackageSearch, Calendar, Truck, Smile } from "lucide-react";
 const STEPS = [
   { icon: PackageSearch, title: "Choose your kit", desc: "Pick the Essential, Comfort or Premium kit that fits your stay." },
   { icon: Calendar, title: "Select a period", desc: "Rent for 1, 3, 6 or 12 months. Extend or end early when you need." },
-  { icon: Truck, title: "We deliver in Belgium", desc: "Your kit arrives at your room or student housing on move-in day." },
+  { icon: Truck, title: "We deliver in Antwerp", desc: "Your kit arrives at your room or student housing on move-in day." },
   { icon: Smile, title: "Return & get refunded", desc: "When you leave, we pick everything up and refund your deposit." },
 ];
 
