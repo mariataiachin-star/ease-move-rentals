@@ -23,7 +23,7 @@ const BENEFITS = [
   },
   {
     icon: GraduationCap,
-    title: "Made for Erasmus & exchange",
+    title: "Made for exchange & international students",
     desc: "Designed around the realities of short-term student stays in Antwerp universities.",
   },
   {
