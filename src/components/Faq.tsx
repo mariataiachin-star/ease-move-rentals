@@ -2,7 +2,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const FAQS = [
   {
-    q: "Where in Belgium do you deliver?",
+    q: "Where in Antwerp do you deliver?",
     a: "We deliver to student housing and private apartments across Belgian university cities including Brussels, Leuven, Ghent, Antwerp, Liège and Louvain-la-Neuve. Just enter your address at checkout.",
   },
   {

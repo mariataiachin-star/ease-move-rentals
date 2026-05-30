@@ -12,7 +12,7 @@ const Hero = () => {
       <div className="container relative z-10 mx-auto grid items-center gap-12 lg:grid-cols-2">
         <div className="animate-fade-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-card px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary shadow-soft">
-            <GraduationCap className="h-4 w-4" /> For Erasmus & international students in Belgium
+            <GraduationCap className="h-4 w-4" /> For Erasmus & international students in Antwerp
           </span>
           <h1 className="mt-6 font-display text-5xl leading-[1.05] text-foreground md:text-6xl lg:text-7xl">
             A stress-free start to your life in Antwerp.

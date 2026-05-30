@@ -40,7 +40,7 @@ const Contact = () => {
             Questions before you book?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            We help students, university housing offices and exchange coordinators across Belgium. Drop us a message and we'll reply personally.
+            We help students, university housing offices and exchange coordinators across Antwerp. Drop us a message and we'll reply personally.
           </p>
 
           <ul className="mt-8 space-y-4 text-sm">
@@ -59,7 +59,7 @@ const Contact = () => {
               </span>
               <div>
                 <p className="font-semibold text-foreground">Based in</p>
-                <p className="text-muted-foreground">Belgium — serving students nationwide</p>
+                <p className="text-muted-foreground">Antwerp — serving students in the city</p>
               </div>
             </li>
             <li className="flex items-start gap-3">

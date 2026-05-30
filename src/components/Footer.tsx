@@ -11,7 +11,7 @@ const Footer = () => (
           Survival <span className="text-primary">Kit</span>
         </div>
         <p className="mt-4 max-w-sm text-sm text-background/70">
-          Sustainable rental kits for international and Erasmus students in Belgium. Affordable, circular, and built for temporary stays.
+          Sustainable rental kits for international and Erasmus students in Antwerp. Affordable, circular, and built for temporary stays.
         </p>
         <div className="mt-6 flex gap-3">
           {[Instagram, Linkedin, Mail].map((Icon, i) => (
@@ -35,7 +35,7 @@ const Footer = () => (
       </div>
     </div>
     <div className="container mx-auto mt-12 border-t border-background/10 pt-6 text-center text-xs text-background/50">
-      © {new Date().getFullYear()} Survival Kit · Built for students in Belgium
+      © {new Date().getFullYear()} Survival Kit · Built for students in Antwerp
     </div>
   </footer>
 );
