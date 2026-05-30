@@ -15,8 +15,7 @@ const Hero = () => {
             <GraduationCap className="h-4 w-4" /> For Erasmus & international students in Belgium
           </span>
           <h1 className="mt-6 font-display text-5xl leading-[1.05] text-foreground md:text-6xl lg:text-7xl">
-            A stress-free start to{" "}
-            <span className="bg-gradient-sunset bg-clip-text text-transparent">student life in Belgium</span>.
+            A stress-free start to your life in Antwerp.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
             Rent a complete kit of bedding, kitchen and home essentials — delivered to your room on arrival, picked up when you leave. Affordable, sustainable, and built for temporary stays.
