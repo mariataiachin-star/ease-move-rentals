@@ -5,7 +5,6 @@ import HowItWorks from "@/components/HowItWorks";
 import Packages from "@/components/Packages";
 import Benefits from "@/components/Benefits";
 import Sustainability from "@/components/Sustainability";
-import Stories from "@/components/Stories";
 import Faq from "@/components/Faq";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -30,7 +29,6 @@ const Index = () => {
         <Packages onSelect={handleSelect} />
         <Benefits />
         <Sustainability />
-        <Stories />
         <Faq />
         <Contact />
       </main>
