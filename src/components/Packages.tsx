@@ -1,16 +1,13 @@
-import { useState } from "react";
-import { Check, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { PACKAGES, PackageId } from "@/data/packages";
 
 interface PackagesProps {
   onSelect: (id: PackageId) => void;
+  onView: (id: PackageId) => void;
 }
 
-const Packages = ({ onSelect }: PackagesProps) => {
-  const [openId, setOpenId] = useState<PackageId | null>(null);
-  return (
+const Packages = ({ onSelect, onView }: PackagesProps) => (
   <section id="packages" className="py-24 bg-gradient-cream">
     <div className="container mx-auto">
       <div className="mx-auto max-w-2xl text-center">
@@ -27,11 +24,14 @@ const Packages = ({ onSelect }: PackagesProps) => {
         {PACKAGES.map((pkg) => {
           const Icon = pkg.icon;
           const featured = pkg.id === "comfort";
-          const isOpen = openId === pkg.id;
           return (
             <article
               key={pkg.id}
-              className={`relative flex flex-col rounded-2xl border bg-card p-8 transition-smooth hover:-translate-y-2 ${
+              onClick={() => onView(pkg.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === "Enter") onView(pkg.id); }}
+              className={`relative flex flex-col rounded-2xl border bg-card p-8 transition-smooth hover:-translate-y-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                 featured
                   ? "border-primary shadow-warm lg:scale-[1.02]"
                   : "border-border shadow-card hover:shadow-warm"
@@ -42,8 +42,18 @@ const Packages = ({ onSelect }: PackagesProps) => {
                   {pkg.highlight}
                 </span>
               )}
-              <div className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${pkg.accent} text-primary-foreground shadow-soft`}>
-                <Icon className="h-7 w-7" />
+              <div className="flex items-start gap-4">
+                <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${pkg.accent} text-primary-foreground shadow-soft`}>
+                  <Icon className="h-7 w-7" />
+                </div>
+                <img
+                  src={pkg.image}
+                  alt={`${pkg.name} preview`}
+                  width={1024}
+                  height={1024}
+                  loading="lazy"
+                  className="ml-auto h-20 w-20 rounded-xl object-cover shadow-card"
+                />
               </div>
               <h3 className="mt-5 font-display text-2xl text-foreground">{pkg.name}</h3>
               <p className="text-sm font-semibold text-primary">{pkg.tagline}</p>
@@ -62,39 +72,18 @@ const Packages = ({ onSelect }: PackagesProps) => {
                 </p>
               </div>
 
-              <Collapsible open={isOpen} onOpenChange={(o) => setOpenId(o ? pkg.id : null)} className="mt-6">
-                <CollapsibleTrigger className="flex w-full items-center justify-between rounded-xl border border-border bg-muted/40 px-4 py-3 text-sm font-semibold text-foreground transition-smooth hover:bg-muted">
-                  <span>{isOpen ? "Hide contents" : "See what's included"}</span>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-                </CollapsibleTrigger>
-                <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-                  <div className="mt-5 space-y-5">
-                    {pkg.categories.map((cat) => (
-                      <div key={cat.label}>
-                        <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">{cat.label}</p>
-                        <ul className="space-y-2 text-sm">
-                          {cat.items.map((item) => (
-                            <li key={item} className="flex items-start gap-2.5">
-                              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent">
-                                <Check className="h-3 w-3" strokeWidth={3} />
-                              </span>
-                              <span className="text-foreground/80">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
+              <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-primary">
+                <span>View kit details</span>
+                <ArrowRight className="h-4 w-4" />
+              </div>
 
               <Button
                 variant={featured ? "hero" : "soft"}
                 size="lg"
-                className="mt-8 w-full"
-                onClick={() => onSelect(pkg.id)}
+                className="mt-6 w-full"
+                onClick={(e) => { e.stopPropagation(); onSelect(pkg.id); }}
               >
-                Choose {pkg.name}
+                Order {pkg.name}
               </Button>
             </article>
           );
@@ -102,7 +91,6 @@ const Packages = ({ onSelect }: PackagesProps) => {
       </div>
     </div>
   </section>
-  );
-};
+);
 
 export default Packages;
