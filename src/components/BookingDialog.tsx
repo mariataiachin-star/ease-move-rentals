@@ -1,19 +1,22 @@
 import { useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 import { ArrowLeft, ArrowRight, Check, Loader2, PartyPopper } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { PACKAGES, PERIODS, PackageId, Period, calculatePrice } from "@/data/packages";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const detailsSchema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name").max(80),
   email: z.string().trim().email("Enter a valid email").max(120),
-  university: z.string().trim().min(2, "Tell us your university").max(120),
+  phone: z.string().trim().min(6, "Phone number is required").max(30),
   address: z.string().trim().min(5, "Delivery address required").max(200),
-  moveInDate: z.string().min(1, "Pick a move-in date"),
+  startDate: z.string().min(1, "Pick a start date"),
 });
 type Details = z.infer<typeof detailsSchema>;
 
@@ -23,11 +26,20 @@ interface Props {
   initialPackage?: PackageId;
 }
 
+const addMonths = (iso: string, months: number) => {
+  if (!iso) return "";
+  const d = new Date(iso);
+  d.setMonth(d.getMonth() + months);
+  return d.toISOString().slice(0, 10);
+};
+
 const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [packageId, setPackageId] = useState<PackageId>(initialPackage ?? "comfort");
   const [period, setPeriod] = useState<Period>(6);
-  const [details, setDetails] = useState<Details>({ fullName: "", email: "", university: "", address: "", moveInDate: "" });
+  const [details, setDetails] = useState<Details>({ fullName: "", email: "", phone: "", address: "", startDate: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof Details, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [confirmationId, setConfirmationId] = useState<string | null>(null);
@@ -39,13 +51,27 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
       setPeriod(6);
       setErrors({});
       setConfirmationId(null);
+      // Prefill from logged-in user
+      if (user) {
+        supabase.from("profiles").select("full_name, email, phone").eq("id", user.id).maybeSingle().then(({ data }) => {
+          if (data) {
+            setDetails((d) => ({
+              ...d,
+              fullName: data.full_name ?? "",
+              email: data.email ?? user.email ?? "",
+              phone: data.phone ?? "",
+            }));
+          }
+        });
+      }
     }
-  }, [open, initialPackage]);
+  }, [open, initialPackage, user]);
 
   const pkg = PACKAGES.find((p) => p.id === packageId)!;
   const pricing = useMemo(() => calculatePrice(pkg.monthlyPrice, period), [pkg, period]);
+  const endDate = useMemo(() => addMonths(details.startDate, period), [details.startDate, period]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const parsed = detailsSchema.safeParse(details);
     if (!parsed.success) {
       const e: Partial<Record<keyof Details, string>> = {};
@@ -56,13 +82,33 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
       return;
     }
     setErrors({});
+    if (!user) {
+      toast.info("Please log in or create an account to complete your order.");
+      onOpenChange(false);
+      navigate("/auth");
+      return;
+    }
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      setConfirmationId("EM-" + Math.random().toString(36).slice(2, 8).toUpperCase());
-      setStep(3);
-      toast.success("Booking request received! Check your inbox.");
-    }, 900);
+    const { data, error } = await supabase.from("orders").insert({
+      user_id: user.id,
+      kit_id: pkg.id,
+      kit_name: pkg.name,
+      period_months: period,
+      start_date: details.startDate,
+      end_date: endDate,
+      full_name: details.fullName,
+      email: details.email,
+      phone: details.phone,
+      delivery_address: details.address,
+      price_total: pricing.total,
+      deposit: pkg.deposit,
+      status: "Active",
+    }).select("id").single();
+    setSubmitting(false);
+    if (error) { toast.error(error.message); return; }
+    setConfirmationId(data.id.slice(0, 8).toUpperCase());
+    setStep(3);
+    toast.success("Order confirmed!");
   };
 
   const STEPS = ["Package", "Period", "Your details", "Confirmed"];
@@ -169,15 +215,20 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                 <p className="font-bold text-foreground">{pkg.name} · {period} months</p>
                 <p className="text-muted-foreground">€{pricing.perMonth}/month · €{pricing.total} total{pricing.saved > 0 && ` · save €${pricing.saved}`} · Deposit €{pkg.deposit}</p>
               </div>
+              {!user && (
+                <div className="rounded-xl border border-primary/30 bg-primary/5 p-3 text-xs text-foreground">
+                  You'll be asked to log in or create an account to confirm.
+                </div>
+              )}
               {([
-                { id: "fullName", label: "Full name", type: "text", placeholder: "Mei Tanaka" },
-                { id: "email", label: "Email", type: "email", placeholder: "you@university.edu" },
-                { id: "university", label: "University", type: "text", placeholder: "KU Leuven" },
-                { id: "address", label: "Delivery address", type: "text", placeholder: "Naamsestraat 80, Leuven" },
-                { id: "moveInDate", label: "Move-in date", type: "date", placeholder: "" },
+                { id: "fullName", label: "Full name", type: "text", placeholder: "Mei Tanaka", required: true },
+                { id: "email", label: "Email", type: "email", placeholder: "you@university.edu", required: true },
+                { id: "phone", label: "Phone number", type: "tel", placeholder: "+32 470 12 34 56", required: true },
+                { id: "address", label: "Delivery address", type: "text", placeholder: "Stadscampus, Antwerp", required: true },
+                { id: "startDate", label: "Rental start date", type: "date", placeholder: "", required: true },
               ] as const).map((field) => (
                 <div key={field.id} className="space-y-1.5">
-                  <Label htmlFor={field.id}>{field.label}</Label>
+                  <Label htmlFor={field.id}>{field.label} <span className="text-destructive">*</span></Label>
                   <Input
                     id={field.id}
                     type={field.type}
@@ -186,10 +237,19 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                     onChange={(e) => setDetails({ ...details, [field.id]: e.target.value })}
                     maxLength={field.id === "address" ? 200 : 120}
                     className="h-11 rounded-xl"
+                    required
                   />
                   {errors[field.id] && <p className="text-xs text-destructive">{errors[field.id]}</p>}
                 </div>
               ))}
+              <div className="space-y-1.5">
+                <Label>Rental end date</Label>
+                <Input value={endDate || ""} readOnly className="h-11 rounded-xl bg-muted" placeholder="Auto-calculated from start date + period" />
+                <p className="text-xs text-muted-foreground">Calculated from your start date and {period}-month rental period.</p>
+              </div>
+              <div className="rounded-xl border border-dashed border-border bg-muted/40 p-3 text-xs text-muted-foreground">
+                💳 Payment & deposit: handled securely on delivery (placeholder for prototype).
+              </div>
             </div>
           )}
 
@@ -206,10 +266,14 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
               <div className="mt-6 inline-block rounded-2xl bg-muted px-6 py-4 text-left text-sm">
                 <p><span className="text-muted-foreground">Package:</span> <span className="font-bold">{pkg.name}</span></p>
                 <p><span className="text-muted-foreground">Period:</span> <span className="font-bold">{period} months</span></p>
-                <p><span className="text-muted-foreground">Move-in:</span> <span className="font-bold">{details.moveInDate}</span></p>
+                <p><span className="text-muted-foreground">Start:</span> <span className="font-bold">{details.startDate}</span></p>
+                <p><span className="text-muted-foreground">End:</span> <span className="font-bold">{endDate}</span></p>
                 <p><span className="text-muted-foreground">Deposit:</span> <span className="font-bold">€{pkg.deposit}</span></p>
                 <p className="mt-2 border-t border-border pt-2"><span className="text-muted-foreground">Total:</span> <span className="font-display text-lg font-bold text-primary">€{pricing.total}</span></p>
               </div>
+              <Button variant="soft" className="mt-6" onClick={() => { onOpenChange(false); navigate("/account"); }}>
+                View in my account
+              </Button>
             </div>
           )}
         </div>
