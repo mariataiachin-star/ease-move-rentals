@@ -1,4 +1,6 @@
 import { Package, Sparkles } from "lucide-react";
+import kitEssentialImg from "@/assets/kit-essential.jpg";
+import kitComfortImg from "@/assets/kit-comfort.jpg";
 
 export type PackageId = "essential" | "comfort";
 export type Period = 1 | 3 | 6 | 12;
@@ -17,6 +19,7 @@ export interface RentalPackage {
   deposit: number;
   icon: typeof Package;
   accent: string;
+  image: string;
   categories: KitCategory[];
   highlight?: string;
 }
@@ -31,6 +34,7 @@ export const PACKAGES: RentalPackage[] = [
     deposit: 60,
     icon: Package,
     accent: "from-[hsl(258_90%_85%)] to-[hsl(258_85%_75%)]",
+    image: kitEssentialImg,
     categories: [
       {
         label: "Bedroom",
@@ -69,6 +73,7 @@ export const PACKAGES: RentalPackage[] = [
     icon: Sparkles,
     accent: "from-[hsl(268_90%_78%)] to-[hsl(258_95%_70%)]",
     highlight: "Most chosen",
+    image: kitComfortImg,
     categories: [
       {
         label: "Bedroom",
