@@ -1,7 +1,11 @@
-import { Boxes } from "lucide-react";
+import { Boxes, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
@@ -25,9 +29,20 @@ const Navbar = () => {
           <button onClick={() => scrollTo("faq")} className="hover:text-foreground transition-smooth">FAQ</button>
           <button onClick={() => scrollTo("contact")} className="hover:text-foreground transition-smooth">Contact</button>
         </div>
-        <Button variant="hero" size="sm" onClick={() => scrollTo("packages")}>
-          Browse kits
-        </Button>
+        <div className="flex items-center gap-2">
+          {user ? (
+            <Button variant="soft" size="sm" onClick={() => navigate("/account")}>
+              <User className="h-4 w-4" /> Account
+            </Button>
+          ) : (
+            <Button variant="soft" size="sm" onClick={() => navigate("/auth")}>
+              Log in
+            </Button>
+          )}
+          <Button variant="hero" size="sm" onClick={() => scrollTo("packages")}>
+            Browse kits
+          </Button>
+        </div>
       </nav>
     </header>
   );

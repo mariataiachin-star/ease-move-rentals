@@ -40,7 +40,7 @@ const Hero = () => {
           <div className="absolute inset-0 -rotate-3 rounded-[2rem] bg-gradient-sunset opacity-25 blur-2xl" />
           <img
             src={heroImage}
-            alt="International student unpacking a Survival Kit rental in a Belgian student room"
+            alt="International student unpacking a Survival Kit rental in an Antwerp student room"
             width={1536}
             height={1280}
             className="relative rounded-[2rem] border border-primary/20 bg-card shadow-warm"
