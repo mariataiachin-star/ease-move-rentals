@@ -259,7 +259,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                 <p className="text-xs text-muted-foreground">Calculated from your start date and {period}-month rental period.</p>
               </div>
               <div className="rounded-xl border border-dashed border-border bg-muted/40 p-3 text-xs text-muted-foreground">
-                💳 Payment & deposit: handled securely on delivery (placeholder for prototype).
+                💳 Payment & deposit: handled securely on delivery.
               </div>
             </div>
           )}
