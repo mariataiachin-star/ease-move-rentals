@@ -2,8 +2,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const FAQS = [
   {
-    q: "Where in Antwerp do you deliver?",
-    a: "We deliver to student housing and private apartments across Belgian university cities including Brussels, Leuven, Ghent, Antwerp, Liège and Louvain-la-Neuve. Just enter your address at checkout.",
+    q: "Is EaseMove Rentals available in Antwerp?",
+    a: "Yes — our current MVP/prototype is focused exclusively on Antwerp, so we can give incoming students the best possible experience here first. Expansion to other Belgian student cities may be considered in the future based on demand.",
   },
   {
     q: "How does the refundable deposit work?",

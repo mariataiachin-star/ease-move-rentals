@@ -11,6 +11,8 @@ import { PACKAGES, PERIODS, PackageId, Period, calculatePrice } from "@/data/pac
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
+const DELIVERY_FEE = 4;
+
 const detailsSchema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name").max(80),
   email: z.string().trim().email("Enter a valid email").max(120),
@@ -70,6 +72,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
   const pkg = PACKAGES.find((p) => p.id === packageId)!;
   const pricing = useMemo(() => calculatePrice(pkg.monthlyPrice, period), [pkg, period]);
   const endDate = useMemo(() => addMonths(details.startDate, period), [details.startDate, period]);
+  const dueToday = pricing.total + pkg.deposit + DELIVERY_FEE;
 
   const handleSubmit = async () => {
     const parsed = detailsSchema.safeParse(details);
@@ -100,7 +103,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
       email: details.email,
       phone: details.phone,
       delivery_address: details.address,
-      price_total: pricing.total,
+      price_total: pricing.total + DELIVERY_FEE,
       deposit: pkg.deposit,
       status: "Active",
     }).select("id").single();
@@ -211,9 +214,17 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
 
           {step === 2 && (
             <div className="space-y-4">
-              <div className="rounded-2xl bg-muted p-4 text-sm">
+              <div className="rounded-2xl bg-muted p-4 text-sm space-y-2">
                 <p className="font-bold text-foreground">{pkg.name} · {period} months</p>
-                <p className="text-muted-foreground">€{pricing.perMonth}/month · €{pricing.total} total{pricing.saved > 0 && ` · save €${pricing.saved}`} · Deposit €{pkg.deposit}</p>
+                <div className="space-y-1 text-muted-foreground">
+                  <div className="flex justify-between"><span>Kit rental ({period} months @ €{pricing.perMonth}/mo)</span><span className="text-foreground">€{pricing.total}</span></div>
+                  <div className="flex justify-between"><span>Refundable deposit</span><span className="text-foreground">€{pkg.deposit}</span></div>
+                  <div className="flex justify-between"><span>Delivery fee</span><span className="text-foreground">€{DELIVERY_FEE}</span></div>
+                  {pricing.saved > 0 && <div className="flex justify-between text-accent"><span>You save</span><span>€{pricing.saved}</span></div>}
+                </div>
+                <div className="flex justify-between border-t border-border pt-2 font-display text-base font-bold text-foreground">
+                  <span>Total due today</span><span className="text-primary">€{dueToday}</span>
+                </div>
               </div>
               {!user && (
                 <div className="rounded-xl border border-primary/30 bg-primary/5 p-3 text-xs text-foreground">
@@ -268,12 +279,11 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                 <p><span className="text-muted-foreground">Period:</span> <span className="font-bold">{period} months</span></p>
                 <p><span className="text-muted-foreground">Start:</span> <span className="font-bold">{details.startDate}</span></p>
                 <p><span className="text-muted-foreground">End:</span> <span className="font-bold">{endDate}</span></p>
+                <p><span className="text-muted-foreground">Kit rental:</span> <span className="font-bold">€{pricing.total}</span></p>
                 <p><span className="text-muted-foreground">Deposit:</span> <span className="font-bold">€{pkg.deposit}</span></p>
-                <p className="mt-2 border-t border-border pt-2"><span className="text-muted-foreground">Total:</span> <span className="font-display text-lg font-bold text-primary">€{pricing.total}</span></p>
+                <p><span className="text-muted-foreground">Delivery fee:</span> <span className="font-bold">€{DELIVERY_FEE}</span></p>
+                <p className="mt-2 border-t border-border pt-2"><span className="text-muted-foreground">Total due today:</span> <span className="font-display text-lg font-bold text-primary">€{dueToday}</span></p>
               </div>
-              <Button variant="soft" className="mt-6" onClick={() => { onOpenChange(false); navigate("/account"); }}>
-                View in my account
-              </Button>
             </div>
           )}
         </div>
@@ -300,9 +310,14 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
               )}
             </>
           ) : (
-            <Button variant="hero" className="ml-auto" onClick={() => onOpenChange(false)}>
-              Done
-            </Button>
+            <div className="ml-auto flex gap-3">
+              <Button variant="soft" onClick={() => onOpenChange(false)}>
+                Done
+              </Button>
+              <Button variant="hero" onClick={() => { onOpenChange(false); navigate("/account"); }}>
+                View My Account
+              </Button>
+            </div>
           )}
         </div>
       </DialogContent>

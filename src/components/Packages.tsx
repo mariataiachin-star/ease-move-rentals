@@ -81,7 +81,7 @@ const Packages = ({ onSelect, onView }: PackagesProps) => (
                 variant={featured ? "hero" : "soft"}
                 size="lg"
                 className="mt-6 w-full"
-                onClick={(e) => { e.stopPropagation(); onSelect(pkg.id); }}
+                onClick={(e) => { e.stopPropagation(); onView(pkg.id); }}
               >
                 Order {pkg.name}
               </Button>
