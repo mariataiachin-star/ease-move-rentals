@@ -65,7 +65,7 @@ const KitDetailDialog = ({ open, onOpenChange, kitId, onOrder }: Props) => {
             </div>
 
             <Button variant="hero" size="lg" className="mt-8 w-full" onClick={() => onOrder(pkg.id)}>
-              Order this kit
+              Continue to Rental Period
             </Button>
           </div>
         </div>
