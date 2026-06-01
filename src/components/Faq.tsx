@@ -2,8 +2,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const FAQS = [
   {
-    q: "Is EaseMove Rentals available in Antwerp?",
-    a: "Yes — our current MVP/prototype is focused exclusively on Antwerp, so we can give incoming students the best possible experience here first. Expansion to other Belgian student cities may be considered in the future based on demand.",
+    q: "Is Survival Kit available in Antwerp?",
+    a: "Yes — Survival Kit currently delivers exclusively within Antwerp. This allows us to provide a reliable and high-quality service for students in the area. We may expand to other Belgian cities in the future.",
   },
   {
     q: "How does the refundable deposit work?",
