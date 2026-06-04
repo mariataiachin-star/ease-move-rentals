@@ -246,6 +246,37 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                 { id: "fullName", label: "Full name", type: "text", placeholder: "Mei Tanaka", required: true },
                 { id: "email", label: "Email", type: "email", placeholder: "you@university.edu", required: true },
                 { id: "phone", label: "Phone number", type: "tel", placeholder: "+32 470 12 34 56", required: true },
+              ] as const).map((field) => (
+                <div key={field.id} className="space-y-1.5">
+                  <Label htmlFor={field.id}>{field.label} <span className="text-destructive">*</span></Label>
+                  <Input
+                    id={field.id}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    value={details[field.id]}
+                    onChange={(e) => setDetails({ ...details, [field.id]: e.target.value })}
+                    maxLength={field.id === "address" ? 200 : 120}
+                    className="h-11 rounded-xl"
+                    required
+                  />
+                  {errors[field.id] && <p className="text-xs text-destructive">{errors[field.id]}</p>}
+                </div>
+              ))}
+              <div className="space-y-1.5">
+                <Label htmlFor="university">University / School <span className="text-destructive">*</span></Label>
+                <Select value={details.university} onValueChange={(v) => setDetails({ ...details, university: v })}>
+                  <SelectTrigger id="university" className="h-11 rounded-xl">
+                    <SelectValue placeholder="Select your university" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {UNIVERSITIES.map((u) => (
+                      <SelectItem key={u} value={u}>{u}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.university && <p className="text-xs text-destructive">{errors.university}</p>}
+              </div>
+              {([
                 { id: "address", label: "Delivery address", type: "text", placeholder: "Stadscampus, Antwerp", required: true },
                 { id: "startDate", label: "Rental start date", type: "date", placeholder: "", required: true },
               ] as const).map((field) => (
