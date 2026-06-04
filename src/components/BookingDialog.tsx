@@ -255,7 +255,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                     placeholder={field.placeholder}
                     value={details[field.id]}
                     onChange={(e) => setDetails({ ...details, [field.id]: e.target.value })}
-                    maxLength={field.id === "address" ? 200 : 120}
+                    maxLength={120}
                     className="h-11 rounded-xl"
                     required
                   />
@@ -276,6 +276,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                 </Select>
                 {errors.university && <p className="text-xs text-destructive">{errors.university}</p>}
               </div>
+              {([
               {([
                 { id: "address", label: "Delivery address", type: "text", placeholder: "Stadscampus, Antwerp", required: true },
                 { id: "startDate", label: "Rental start date", type: "date", placeholder: "", required: true },
