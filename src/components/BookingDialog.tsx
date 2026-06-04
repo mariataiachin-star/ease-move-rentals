@@ -277,7 +277,6 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                 {errors.university && <p className="text-xs text-destructive">{errors.university}</p>}
               </div>
               {([
-              {([
                 { id: "address", label: "Delivery address", type: "text", placeholder: "Stadscampus, Antwerp", required: true },
                 { id: "startDate", label: "Rental start date", type: "date", placeholder: "", required: true },
               ] as const).map((field) => (
