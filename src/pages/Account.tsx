@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Boxes, LogOut, Mail, Phone, User as UserIcon, Package as PackageIcon, MapPin, Calendar, Loader2 } from "lucide-react";
+import { LogOut, Mail, Phone, User as UserIcon, Package as PackageIcon, MapPin, Calendar, Loader2, GraduationCap } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import BrandLogo from "@/components/BrandLogo";
 
 interface Profile { id: string; full_name: string | null; email: string | null; phone: string | null; }
 interface Order {
@@ -17,6 +18,7 @@ interface Order {
   start_date: string;
   end_date: string;
   delivery_address: string;
+  university: string | null;
   price_total: number;
   deposit: number;
   status: string;
@@ -83,9 +85,7 @@ const Account = () => {
       <header className="sticky top-0 z-50 backdrop-blur-md bg-background/70 border-b border-border/50">
         <nav className="container mx-auto flex items-center justify-between py-4">
           <Link to="/" className="flex items-center gap-2.5 font-display text-2xl text-foreground">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-sunset text-primary-foreground shadow-soft">
-              <Boxes className="h-5 w-5" />
-            </span>
+            <BrandLogo size={36} />
             <span className="font-body font-bold tracking-tight">Survival<span className="text-primary"> Kit</span></span>
           </Link>
           <Button variant="soft" size="sm" onClick={handleSignOut}><LogOut className="h-4 w-4" /> Log out</Button>
@@ -155,13 +155,14 @@ const Account = () => {
                         <p className="text-xs text-muted-foreground mt-1">Ordered {new Date(o.created_at).toLocaleDateString()}</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-display text-2xl text-primary">€{o.price_total}</p>
-                        <p className="text-xs text-muted-foreground">Deposit €{o.deposit}</p>
+                        <p className="font-display text-2xl text-primary">€{o.price_total + o.deposit}</p>
+                        <p className="text-xs text-muted-foreground">Rental €{o.price_total - 4} · Deposit €{o.deposit} · Delivery €4</p>
                       </div>
                     </div>
                     <div className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
                       <p className="flex items-center gap-2 text-muted-foreground"><Calendar className="h-4 w-4 text-primary" /> {new Date(o.start_date).toLocaleDateString()} → {new Date(o.end_date).toLocaleDateString()} <span className="text-xs">({o.period_months}mo)</span></p>
                       <p className="flex items-center gap-2 text-muted-foreground"><MapPin className="h-4 w-4 text-primary" /> {o.delivery_address}</p>
+                      {o.university && <p className="flex items-center gap-2 text-muted-foreground sm:col-span-2"><GraduationCap className="h-4 w-4 text-primary" /> {o.university}</p>}
                     </div>
                   </article>
                 ))}
