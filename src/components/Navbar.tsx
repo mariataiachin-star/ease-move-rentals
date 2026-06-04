@@ -1,7 +1,8 @@
-import { Boxes, User } from "lucide-react";
+import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import BrandLogo from "@/components/BrandLogo";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -17,9 +18,7 @@ const Navbar = () => {
           onClick={() => scrollTo("top")}
           className="flex items-center gap-2.5 font-display text-2xl text-foreground"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-sunset text-primary-foreground shadow-soft">
-            <Boxes className="h-5 w-5" />
-          </span>
+          <BrandLogo size={36} />
           <span className="font-body font-bold tracking-tight">Survival<span className="text-primary"> Kit</span></span>
         </button>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">

@@ -6,17 +6,27 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { PACKAGES, PERIODS, PackageId, Period, calculatePrice } from "@/data/packages";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
 const DELIVERY_FEE = 4;
+const UNIVERSITIES = [
+  "University of Antwerp",
+  "KU Leuven",
+  "Thomas More",
+  "AP University College",
+  "KdG University of Applied Sciences",
+  "Other",
+];
 
 const detailsSchema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name").max(80),
   email: z.string().trim().email("Enter a valid email").max(120),
   phone: z.string().trim().min(6, "Phone number is required").max(30),
+  university: z.string().trim().min(2, "Please select your university").max(100),
   address: z.string().trim().min(5, "Delivery address required").max(200),
   startDate: z.string().min(1, "Pick a start date"),
 });
@@ -41,7 +51,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
   const [step, setStep] = useState(0);
   const [packageId, setPackageId] = useState<PackageId>(initialPackage ?? "comfort");
   const [period, setPeriod] = useState<Period>(6);
-  const [details, setDetails] = useState<Details>({ fullName: "", email: "", phone: "", address: "", startDate: "" });
+  const [details, setDetails] = useState<Details>({ fullName: "", email: "", phone: "", university: "", address: "", startDate: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof Details, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [confirmationId, setConfirmationId] = useState<string | null>(null);
@@ -102,6 +112,7 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
       full_name: details.fullName,
       email: details.email,
       phone: details.phone,
+      university: details.university,
       delivery_address: details.address,
       price_total: pricing.total + DELIVERY_FEE,
       deposit: pkg.deposit,
@@ -235,6 +246,37 @@ const BookingDialog = ({ open, onOpenChange, initialPackage }: Props) => {
                 { id: "fullName", label: "Full name", type: "text", placeholder: "Mei Tanaka", required: true },
                 { id: "email", label: "Email", type: "email", placeholder: "you@university.edu", required: true },
                 { id: "phone", label: "Phone number", type: "tel", placeholder: "+32 470 12 34 56", required: true },
+              ] as const).map((field) => (
+                <div key={field.id} className="space-y-1.5">
+                  <Label htmlFor={field.id}>{field.label} <span className="text-destructive">*</span></Label>
+                  <Input
+                    id={field.id}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    value={details[field.id]}
+                    onChange={(e) => setDetails({ ...details, [field.id]: e.target.value })}
+                    maxLength={120}
+                    className="h-11 rounded-xl"
+                    required
+                  />
+                  {errors[field.id] && <p className="text-xs text-destructive">{errors[field.id]}</p>}
+                </div>
+              ))}
+              <div className="space-y-1.5">
+                <Label htmlFor="university">University / School <span className="text-destructive">*</span></Label>
+                <Select value={details.university} onValueChange={(v) => setDetails({ ...details, university: v })}>
+                  <SelectTrigger id="university" className="h-11 rounded-xl">
+                    <SelectValue placeholder="Select your university" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {UNIVERSITIES.map((u) => (
+                      <SelectItem key={u} value={u}>{u}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.university && <p className="text-xs text-destructive">{errors.university}</p>}
+              </div>
+              {([
                 { id: "address", label: "Delivery address", type: "text", placeholder: "Stadscampus, Antwerp", required: true },
                 { id: "startDate", label: "Rental start date", type: "date", placeholder: "", required: true },
               ] as const).map((field) => (

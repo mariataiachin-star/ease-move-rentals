@@ -1,13 +1,12 @@
-import { Boxes, Instagram, Linkedin, Mail } from "lucide-react";
+import { Instagram, Linkedin, Mail } from "lucide-react";
+import BrandLogo from "@/components/BrandLogo";
 
 const Footer = () => (
   <footer className="bg-foreground text-background py-16">
     <div className="container mx-auto grid gap-10 md:grid-cols-4">
       <div className="md:col-span-2">
         <div className="flex items-center gap-2.5 font-body text-2xl font-bold">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-sunset text-primary-foreground">
-            <Boxes className="h-5 w-5" />
-          </span>
+          <BrandLogo size={36} variant="onDark" />
           Survival <span className="text-primary">Kit</span>
         </div>
         <p className="mt-4 max-w-sm text-sm text-background/70">

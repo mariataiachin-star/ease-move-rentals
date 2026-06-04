@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { z } from "zod";
-import { Boxes, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import BrandLogo from "@/components/BrandLogo";
 
 const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Enter your full name").max(80),
@@ -68,9 +69,7 @@ const Auth = () => {
     <main className="min-h-screen bg-gradient-warm flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <Link to="/" className="flex items-center justify-center gap-2.5 font-display text-2xl text-foreground mb-8">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-sunset text-primary-foreground shadow-soft">
-            <Boxes className="h-5 w-5" />
-          </span>
+          <BrandLogo size={36} />
           <span className="font-body font-bold tracking-tight">Survival<span className="text-primary"> Kit</span></span>
         </Link>
 
